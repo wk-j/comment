@@ -1,8 +1,21 @@
 import fs from "fs"
 
-var buffer = fs.readFileSync("resource/File.js", "utf8")
+function findCommentIndexs(buffer: string) {
+    var comment = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
+    var match: RegExpMatchArray
+    var indexs = []
 
-var regex = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
+    while ((match = comment.exec(buffer))) {
+        var chars = match[0]
+        console.log(chars)
+        var index = match.index;
+        for (var c of chars) {
+            indexs.push(index)
+            index += 1
+        }
+    }
+    return indexs;
+}
 
-var noComment = buffer.match(regex);
-console.log(noComment)
+var buffer = fs.readFileSync("resource/Issue#5.ts", "utf8")
+var result = findCommentIndexs(buffer);
