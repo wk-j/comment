@@ -17,5 +17,16 @@ function findCommentIndexs(buffer: string) {
     return indexs;
 }
 
+function replaceComments(buffer: string) {
+    var comment = /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm
+    return buffer.replace(comment, (x) => {
+        var len = x.length
+        var r = " ".repeat(len)
+        return r
+    })
+}
+
 var buffer = fs.readFileSync("resource/Issue#5.ts", "utf8")
-var result = findCommentIndexs(buffer);
+var rs = replaceComments(buffer)
+console.log(rs)
+// var result = findCommentIndexs(buffer);
